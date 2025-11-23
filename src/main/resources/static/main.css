@@ -1,0 +1,20 @@
+pre {
+    padding: 8px;
+    border: 1px dotted;
+}
+footer {
+    font-size: small;
+}
+footer > p {
+    text-align: right;
+}
+.compatible,
+.incompatible {
+    font-weight: bold;
+}
+.compatible {
+    color: #1A4405;
+}
+.incompatible {
+    color: #72170F;
+}

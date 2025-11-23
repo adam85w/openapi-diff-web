@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenAPI Diff</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Adam Woźniak">
+    <link href="/pico.classless.zinc.min.css" rel="stylesheet" />
+    <link href="/main.css" rel="stylesheet" />
+</head>
+<body>
+<header>
+    <h1>OpenAPI Diff WEB interface</h1>
+    <hr />
+</header>
+<main>
+    <h2>Form</h2>
+    <form method="post" enctype="multipart/form-data">
+        <fieldset>
+            <label>Current version: <input type="file" name="current_version" /></label>
+            <label>New version: <input type="file" name="new_version" /></label>
+            <input value="Submit" type="submit" class="secondary" />
+        </fieldset>
+    </form>
+    <th:block th:if="${process}">
+        <hr />
+        <h2>Result</h2>
+        <th:block th:if="${!isDifferent}">
+            <p>There are no differences between the specified versions.</p>
+        </th:block>
+        <th:block th:if="${isDifferent && isCompatible}">
+            <p>There are differences between the versions, <span class="compatible">but they are compatible.</span></p>
+        </th:block>
+        <th:block th:if="${isDifferent && !isCompatible}">
+            <p class="error">There are changes between versions, <span class="incompatible">and they are incompatible.</span></p>
+        </th:block>
+        <details>
+            <summary role="button" class="outline contrast">Output</summary>
+            <pre><th:block th:text="${output}"></th:block></pre>
+        </details>
+        <th:block th:if="${isDifferent}">
+            <details>
+                <summary role="button" class="outline contrast">Markdown</summary>
+                <pre><th:block th:text="${markdown}"></th:block></pre>
+            </details>
+        </th:block>
+    </th:block>
+</main>
+<footer>
+    <hr />
+    <p>&copy; 2025 <a href="mailto:adam85.w@gmail.com">Adam Woźniak</a><br />Credits: <a href="https://github.com/OpenAPITools/openapi-diff">OpenAPI Diff</a></p>
+</footer>
+</body>
+</html>
