@@ -30,13 +30,20 @@ class OpenApiDiffController {
     }
 
     @PostMapping
-    String process(Model model, @RequestParam(name = "current_version") MultipartFile currentVersion, @RequestParam(name = "new_version") MultipartFile newVersion) throws IOException {
-        var changedOpenApi = service.diff(currentVersion.getInputStream(), newVersion.getInputStream());
-        model.addAttribute("process", true);
-        model.addAttribute("isDifferent", changedOpenApi.isDifferent());
-        model.addAttribute("isCompatible",  changedOpenApi.isCompatible());
-        model.addAttribute("output", renderConsoleOutput(changedOpenApi));
-        model.addAttribute("markdown", renderMarkdownOutput(changedOpenApi));
+    String process(Model model, @RequestParam(name = "current_version") MultipartFile currentVersion, @RequestParam(name = "new_version") MultipartFile newVersion) {
+        try {
+            var changedOpenApi = service.diff(currentVersion, newVersion);
+            model.addAttribute("process", true);
+            model.addAttribute("error", false);
+            model.addAttribute("isDifferent", changedOpenApi.isDifferent());
+            model.addAttribute("isCompatible", changedOpenApi.isCompatible());
+            model.addAttribute("output", renderConsoleOutput(changedOpenApi));
+            model.addAttribute("markdown", renderMarkdownOutput(changedOpenApi));
+        } catch (InvalidOpenAPIException e) {
+            model.addAttribute("process", true);
+            model.addAttribute("error", true);
+            model.addAttribute("errorMessage", e.getMessage());
+        }
         return "index";
     }
 

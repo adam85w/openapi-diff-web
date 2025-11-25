@@ -24,25 +24,31 @@
     </form>
     <th:block th:if="${process}">
         <hr />
-        <h2>Result</h2>
-        <th:block th:if="${!isDifferent}">
-            <p>There are no differences between the specified versions.</p>
+        <th:block th:if="${error}">
+            <h2>Error</h2>
+            <p th:text="${errorMessage}"></p>
         </th:block>
-        <th:block th:if="${isDifferent && isCompatible}">
-            <p>There are differences between the versions, <span class="compatible">but they are compatible.</span></p>
-        </th:block>
-        <th:block th:if="${isDifferent && !isCompatible}">
-            <p class="error">There are changes between versions, <span class="incompatible">and they are incompatible.</span></p>
-        </th:block>
-        <details>
-            <summary role="button" class="outline contrast">Output</summary>
-            <pre><th:block th:text="${output}"></th:block></pre>
-        </details>
-        <th:block th:if="${isDifferent}">
+        <th:block th:if="${!error}">
+            <h2>Result</h2>
+            <th:block th:if="${!isDifferent}">
+                <p>There are no differences between the specified versions.</p>
+            </th:block>
+            <th:block th:if="${isDifferent && isCompatible}">
+                <p>There are differences between the versions, <span class="compatible">but they are compatible.</span></p>
+            </th:block>
+            <th:block th:if="${isDifferent && !isCompatible}">
+                <p class="error">There are changes between versions, <span class="incompatible">and they are incompatible.</span></p>
+            </th:block>
             <details>
-                <summary role="button" class="outline contrast">Markdown</summary>
-                <pre><th:block th:text="${markdown}"></th:block></pre>
+                <summary role="button" class="outline contrast">Output</summary>
+                <pre><th:block th:text="${output}"></th:block></pre>
             </details>
+            <th:block th:if="${isDifferent}">
+                <details>
+                    <summary role="button" class="outline contrast">Markdown</summary>
+                    <pre><th:block th:text="${markdown}"></th:block></pre>
+                </details>
+            </th:block>
         </th:block>
     </th:block>
 </main>
