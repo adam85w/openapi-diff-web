@@ -30,9 +30,10 @@ class OpenApiDiffController {
     }
 
     @PostMapping
-    String process(Model model, @RequestParam(name = "current_version") MultipartFile currentVersion, @RequestParam(name = "new_version") MultipartFile newVersion) {
+    String process(Model model, @RequestParam(name = "current_version") MultipartFile currentVersion,
+                   @RequestParam(name = "new_version") MultipartFile newVersion, @RequestParam(name = "format") OpenApiFormat format) {
         try {
-            var changedOpenApi = service.diff(currentVersion, newVersion);
+            var changedOpenApi = service.diff(currentVersion, newVersion, format);
             model.addAttribute("process", true);
             model.addAttribute("error", false);
             model.addAttribute("isDifferent", changedOpenApi.isDifferent());
