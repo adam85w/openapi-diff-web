@@ -45,7 +45,7 @@ class OpenApiDiffController {
             model.addAttribute("error", true);
             model.addAttribute("errorMessage", e.getMessage());
         }
-        return "index";
+        return "result :: result";
     }
 
     private String renderConsoleOutput(ChangedOpenApi changedOpenApi) {
