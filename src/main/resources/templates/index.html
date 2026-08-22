@@ -18,9 +18,10 @@
     <h2>Provide contracts</h2>
     <form hx-encoding="multipart/form-data" hx-post="/" hx-target="#results">
         <fieldset>
-            <label>Current version: <input type="file" name="current_version" /></label>
-            <label>New version: <input type="file" name="new_version" /></label>
-            <label>Format: <select name="format">
+            <label>Current version: <input type="file" name="current_version" required /></label>
+            <label>New version: <input type="file" name="new_version" required /></label>
+            <label>Format: <select name="format" required>
+                <option value="">--</option>
                 <option value="YAML">yaml</option>
                 <option value="JSON">json</option>
             </select></label>
